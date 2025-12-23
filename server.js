@@ -11,8 +11,8 @@ const __dirname = path.dirname(__filename);
 // Отдаём статику из dist
 app.use(express.static(path.join(__dirname, "dist")));
 
-// SPA fallback
-app.get("/*", (_req, res) => {
+// SPA fallback — любой маршрут возвращает index.html
+app.use((_req, res) => {
   res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
 
