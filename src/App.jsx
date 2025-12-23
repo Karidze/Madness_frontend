@@ -1,12 +1,7 @@
-import UserList from "./components/UserList";
+import Home from "./pages/Home";
 
 function App() {
-  return (
-    <div>
-      <h1>Madness RPG</h1>
-      <UserList />
-    </div>
-  );
+  return <Home />;
 }
 
 export default App;

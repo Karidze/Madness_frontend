@@ -1,7 +1,9 @@
 import axios from "axios";
 
-const api = axios.create({
-  baseURL: "http://127.0.0.1:8000/api", // твой FastAPI сервер
-});
+const API_URL = "https://madnessbackend-production.up.railway.app/api";
 
-export default api;
+export async function getCharacters() {
+  const res = await axios.get(`${API_URL}/characters/`);
+  return res.data;
+}
+
