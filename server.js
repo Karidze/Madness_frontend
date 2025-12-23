@@ -19,3 +19,7 @@ app.use((_req, res) => {
 app.listen(port, "0.0.0.0", () => {
   console.log(`Server running on port ${port}`);
 });
+
+app.get("/health", (_req, res) => {
+  res.send("OK");
+});
