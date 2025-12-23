@@ -11,11 +11,11 @@ const __dirname = path.dirname(__filename);
 // Отдаём статику из dist
 app.use(express.static(path.join(__dirname, "dist")));
 
-// SPA fallback — любой маршрут возвращает index.html
-app.use((_req, res) => {
+// SPA fallback
+app.get("/*", (_req, res) => {
   res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
 
-app.listen(port, () => {
+app.listen(port, "0.0.0.0", () => {
   console.log(`Server running on port ${port}`);
 });
