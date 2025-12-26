@@ -1,0 +1,60 @@
+/* Контейнер игры */
+.game-screen {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Фон */
+.background img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* фон заполняет экран полностью */
+  z-index: 0;
+}
+
+/* Персонаж */
+.character {
+  position: absolute;
+  bottom: 10%; /* поднимаем выше пола */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+.character img {
+  height: 40vh;       /* адаптивная высота: 40% экрана */
+  max-height: 500px;  /* ограничение для больших экранов */
+  width: auto;
+  object-fit: contain;
+}
+
+/* Поп-ап */
+.popup {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.9);
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  z-index: 2;
+}
+
+/* Адаптивные правила */
+@media (orientation: portrait) {
+  .character img {
+    height: 50vh; /* на телефонах персонаж чуть выше */
+  }
+}
+
+@media (orientation: landscape) {
+  .character img {
+    height: 35vh; /* на планшетах/ПК персонаж чуть меньше */
+  }
+}

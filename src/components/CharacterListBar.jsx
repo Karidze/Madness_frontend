@@ -1,3 +1,5 @@
+//src/components/CharacterListBar.jsx
+
 import CharacterCard from "./CharacterCard";
 
 export default function CharacterListBar({ characters }) {
