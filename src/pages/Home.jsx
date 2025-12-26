@@ -12,49 +12,54 @@ export default function Home() {
   const [debugInfo, setDebugInfo] = useState(""); // <-- новое состояние для вывода initData
 
   useEffect(() => {
-    async function init() {
-      setLoading(true);
-      setError("");
+  if (window.Telegram?.WebApp) {
+    window.Telegram.WebApp.ready();
+    console.log("Telegram WebApp is ready");
+  }
 
-      let currentUser = loadSavedAuth();
+  async function init() {
+    setLoading(true);
+    setError("");
 
-      if (!currentUser) {
-        const initData = window.Telegram?.WebApp?.initData || "";
+    let currentUser = loadSavedAuth();
 
-        // сохраняем initData прямо в UI
-        setDebugInfo(`initData: ${initData || "пусто"}`);
+    if (!currentUser) {
+      const initData = window.Telegram?.WebApp?.initData || "";
 
-        if (!initData) {
-          setError("Нет данных Telegram для авторизации");
-          setLoading(false);
-          return;
-        }
-        try {
-          const { user } = await authWithTelegram(initData);
-          currentUser = user;
-        } catch (e) {
-          console.error("Auth error:", e);
-          setError("Ошибка авторизации через Telegram");
-          setLoading(false);
-          return;
-        }
-      }
+      setDebugInfo(`initData: ${initData || "пусто"}`);
 
-      setUser(currentUser);
-
-      try {
-        const char = await getCharacterByUser(currentUser.id);
-        setCharacter(char);
-      } catch (e) {
-        console.error("Character load error:", e);
-        setError("Ошибка загрузки персонажа");
-      } finally {
+      if (!initData) {
+        setError("Нет данных Telegram для авторизации");
         setLoading(false);
+        return;
+      }
+      try {
+        const { user } = await authWithTelegram(initData);
+        currentUser = user;
+      } catch (e) {
+        console.error("Auth error:", e);
+        setError("Ошибка авторизации через Telegram");
+        setLoading(false);
+        return;
       }
     }
 
-    init();
-  }, []);
+    setUser(currentUser);
+
+    try {
+      const char = await getCharacterByUser(currentUser.id);
+      setCharacter(char);
+    } catch (e) {
+      console.error("Character load error:", e);
+      setError("Ошибка загрузки персонажа");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  init();
+}, []);
+
 
   async function handleCreate({ gender, username }) {
     if (!user) return;
